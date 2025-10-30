@@ -1,6 +1,6 @@
-// lib/main.dart
 import 'package:flutter/material.dart';
-import 'package:quiz_master/screens/welcome_screens.dart'; // Changed from quiz_application
+import 'package:quiz_master/screens/welcome_screens.dart';
+import 'package:quiz_master/screens/quiz_screens.dart';
 
 void main() {
   runApp(const QuizMasterApp());
@@ -18,10 +18,11 @@ class QuizMasterApp extends StatelessWidget {
         fontFamily: 'Inter',
         scaffoldBackgroundColor: const Color(0xFF2d2d44),
       ),
-      // Initial route
       initialRoute: '/',
-      // Define all routes
-      routes: {'/': (context) => const WelcomeScreen()},
+      routes: {
+        '/': (context) => const WelcomeScreen(),
+        '/quiz': (context) => const QuizScreen(),
+      },
     );
   }
 }

@@ -20,7 +20,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   void _startQuiz() {
     if (_formKey.currentState!.validate()) {
-      // Navigate ke quiz screen dengan passing nama
       Navigator.pushNamed(
         context,
         '/quiz',
@@ -53,27 +52,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // Header
                   _buildHeader(),
-
                   SizedBox(height: size.height * 0.05),
-
-                  // Illustration
                   _buildIllustration(size),
-
                   SizedBox(height: size.height * 0.05),
-
-                  // Input Form
                   _buildInputForm(),
-
                   SizedBox(height: size.height * 0.04),
-
-                  // Features Grid
                   _buildFeaturesGrid(),
-
                   SizedBox(height: size.height * 0.04),
-
-                  // Start Button
                   _buildStartButton(),
                 ],
               ),
@@ -106,7 +92,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   Widget _buildIllustration(Size size) {
     return Container(
-      height: size.height * 0.3,
+      height: size.height * 0.25,
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
@@ -122,7 +108,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           ),
         ],
       ),
-      child: const Center(child: Text('🧠', style: TextStyle(fontSize: 120))),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: Image.asset(
+          'assets/images/computer.png',
+          fit: BoxFit.contain,
+          errorBuilder: (context, error, stackTrace) {
+            return const Center(
+              child: Icon(
+                Icons.image_not_supported,
+                size: 40,
+                color: Colors.white70,
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 
@@ -185,16 +186,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget _buildFeaturesGrid() {
     return Row(
       children: [
-        Expanded(child: _buildFeatureCard('🏆', 'Rewards')),
+        Expanded(
+            child: _buildFeatureCard('assets/images/scores.png', 'Scores')),
         const SizedBox(width: 15),
-        Expanded(child: _buildFeatureCard('📊', 'Score')),
-        const SizedBox(width: 15),
-        Expanded(child: _buildFeatureCard('📚', 'Subjects')),
+        Expanded(
+            child: _buildFeatureCard(
+                'assets/images/answer-key.png', 'Answer Key')),
       ],
     );
   }
 
-  Widget _buildFeatureCard(String icon, String label) {
+  Widget _buildFeatureCard(String imagePath, String label) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
       decoration: BoxDecoration(
@@ -203,7 +205,19 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       ),
       child: Column(
         children: [
-          Text(icon, style: const TextStyle(fontSize: 32)),
+          Image.asset(
+            imagePath,
+            width: 50,
+            height: 50,
+            fit: BoxFit.contain,
+            errorBuilder: (context, error, stackTrace) {
+              return const Icon(
+                Icons.image_not_supported,
+                size: 50,
+                color: Colors.white70,
+              );
+            },
+          ),
           const SizedBox(height: 8),
           Text(
             label,
