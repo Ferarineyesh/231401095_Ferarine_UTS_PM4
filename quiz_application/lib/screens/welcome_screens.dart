@@ -107,7 +107,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: Image.asset(
-          'assets/images/1.jpeg',
+          'assets/images/computer.png',
           fit: BoxFit.cover,
           width: double.infinity,
           errorBuilder: (context, error, stackTrace) {
