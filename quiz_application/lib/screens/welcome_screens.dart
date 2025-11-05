@@ -1,4 +1,3 @@
-// lib/screens/welcome_screen.dart
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -31,6 +30,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final isSmallScreen = size.height < 700;
 
     return Scaffold(
       body: Container(
@@ -45,7 +45,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           child: SingleChildScrollView(
             padding: EdgeInsets.symmetric(
               horizontal: size.width * 0.08,
-              vertical: size.height * 0.05,
+              vertical: isSmallScreen ? size.height * 0.03 : size.height * 0.05,
             ),
             child: Form(
               key: _formKey,
@@ -53,14 +53,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   _buildHeader(),
-                  SizedBox(height: size.height * 0.05),
-                  _buildIllustration(size),
-                  SizedBox(height: size.height * 0.05),
+                  SizedBox(height: isSmallScreen ? 20 : size.height * 0.04),
+                  _buildIllustration(size, isSmallScreen),
+                  SizedBox(height: isSmallScreen ? 20 : size.height * 0.04),
                   _buildInputForm(),
-                  SizedBox(height: size.height * 0.04),
-                  _buildFeaturesGrid(),
-                  SizedBox(height: size.height * 0.04),
+                  SizedBox(height: isSmallScreen ? 20 : size.height * 0.04),
                   _buildStartButton(),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),
@@ -90,35 +89,52 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     );
   }
 
-  Widget _buildIllustration(Size size) {
+  Widget _buildIllustration(Size size, bool isSmallScreen) {
+    final imageHeight = isSmallScreen ? size.height * 0.22 : size.height * 0.28;
+
     return Container(
-      height: size.height * 0.25,
+      height: imageHeight,
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color(0xFF667eea), Color(0xFF764ba2)],
-        ),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF667eea).withOpacity(0.3),
-            blurRadius: 30,
-            offset: const Offset(0, 10),
+            color: Colors.black.withOpacity(0.3),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
           ),
         ],
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: Image.asset(
-          'assets/images/computer.png',
-          fit: BoxFit.contain,
+          'assets/images/1.jpeg',
+          fit: BoxFit.cover,
+          width: double.infinity,
           errorBuilder: (context, error, stackTrace) {
-            return const Center(
-              child: Icon(
-                Icons.image_not_supported,
-                size: 40,
-                color: Colors.white70,
+            return Container(
+              decoration: BoxDecoration(
+                color: const Color(0xFF3d3d5c),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.image_not_supported,
+                      size: 40,
+                      color: Colors.white70,
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      'Image not found',
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           },
@@ -180,56 +196,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           },
         ),
       ],
-    );
-  }
-
-  Widget _buildFeaturesGrid() {
-    return Row(
-      children: [
-        Expanded(
-            child: _buildFeatureCard('assets/images/scores.png', 'Scores')),
-        const SizedBox(width: 15),
-        Expanded(
-            child: _buildFeatureCard(
-                'assets/images/answer-key.png', 'Answer Key')),
-      ],
-    );
-  }
-
-  Widget _buildFeatureCard(String imagePath, String label) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
-      decoration: BoxDecoration(
-        color: const Color(0xFF3d3d5c),
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Column(
-        children: [
-          Image.asset(
-            imagePath,
-            width: 50,
-            height: 50,
-            fit: BoxFit.contain,
-            errorBuilder: (context, error, stackTrace) {
-              return const Icon(
-                Icons.image_not_supported,
-                size: 50,
-                color: Colors.white70,
-              );
-            },
-          ),
-          const SizedBox(height: 8),
-          Text(
-            label,
-            style: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: Color(0xB3FFFFFF),
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
     );
   }
 

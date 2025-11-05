@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_master/screens/welcome_screens.dart';
 import 'package:quiz_master/screens/quiz_screens.dart';
+import 'package:quiz_master/screens/result_screens.dart';
 
 void main() {
   runApp(const QuizMasterApp());
@@ -22,6 +23,7 @@ class QuizMasterApp extends StatelessWidget {
       routes: {
         '/': (context) => const WelcomeScreen(),
         '/quiz': (context) => const QuizScreen(),
+        '/result': (context) => const ResultScreen(),
       },
     );
   }
