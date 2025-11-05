@@ -1,4 +1,3 @@
-// lib/screens/quiz_screen.dart
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:quiz_master/models/question.dart';
