@@ -68,7 +68,7 @@ class _ResultScreenState extends State<ResultScreen>
   void _retakeQuiz() {
     Navigator.pushNamedAndRemoveUntil(
       context,
-      '/',
+      '/quiz',
       (route) => false,
     );
   }
@@ -179,12 +179,11 @@ class _ResultScreenState extends State<ResultScreen>
             children: [
               ScaleTransition(
                 scale: _scaleAnimation,
-                child: Text(
-                  '🎉',
-                  style: TextStyle(
-                    fontSize:
-                        isVerySmallScreen ? 40 : (isSmallScreen ? 50 : 65),
-                  ),
+                child: Image.asset(
+                  'assets/images/scores.png',
+                  width: isVerySmallScreen ? 60 : (isSmallScreen ? 75 : 95),
+                  height: isVerySmallScreen ? 60 : (isSmallScreen ? 75 : 95),
+                  fit: BoxFit.contain,
                 ),
               ),
               SizedBox(height: isVerySmallScreen ? 4 : 8),
@@ -446,64 +445,27 @@ class _ResultScreenState extends State<ResultScreen>
     final buttonPadding = isVerySmallScreen ? 14.0 : 16.0;
     final fontSize = isVerySmallScreen ? 15.0 : 16.0;
 
-    return Column(
-      children: [
-        SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Share feature coming soon!'),
-                  backgroundColor: Color(0xFF667eea),
-                  duration: Duration(seconds: 2),
-                ),
-              );
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFffd93d),
-              foregroundColor: const Color(0xFF2d2d44),
-              padding: EdgeInsets.symmetric(vertical: buttonPadding),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              elevation: 0,
-            ),
-            child: Text(
-              'Share Score',
-              style: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: _retakeQuiz,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color(0xFFffd93d),
+          foregroundColor: const Color(0xFF2d2d44),
+          padding: EdgeInsets.symmetric(vertical: buttonPadding),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          elevation: 0,
+        ),
+        child: Text(
+          'Take a Quiz Again',
+          style: TextStyle(
+            fontSize: fontSize,
+            fontWeight: FontWeight.w700,
           ),
         ),
-        const SizedBox(height: 10),
-        SizedBox(
-          width: double.infinity,
-          child: OutlinedButton(
-            onPressed: _retakeQuiz,
-            style: OutlinedButton.styleFrom(
-              foregroundColor: const Color(0xFFffd93d),
-              side: const BorderSide(
-                color: Color(0xFFffd93d),
-                width: 2,
-              ),
-              padding: EdgeInsets.symmetric(vertical: buttonPadding),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-            child: Text(
-              'Take a Quiz Again',
-              style: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
